@@ -6,9 +6,12 @@ import { UserContext } from "../../contexts/user.context";
 import { logOut } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropDown from "../../components/cart-dropdown/cart-dropdown.component";
+import { CartContext } from "../../contexts/cart.context";
 
 const Navigation = () => {
+    const {show} = useContext(CartContext);
     const {currentUser} = useContext(UserContext);
+
     return (
     <Fragment>
         <div className="navigation">
@@ -20,9 +23,9 @@ const Navigation = () => {
                 {
                     currentUser ? (<span className='nav-link' onClick = { async ()=> await logOut()}>Logout</span>) : (<Link  to="/auth" className="nav-link">Sign in</Link>)
                 }
-                <CartIcon/>
+                <CartIcon />
             </div>
-            <CartDropDown/>
+            {show && <CartDropDown />}
         </div>
         <Outlet/>
     </Fragment>)
